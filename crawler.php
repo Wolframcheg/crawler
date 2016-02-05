@@ -2,11 +2,14 @@
 <?php
 
 use \wolfram\App;
-use \wolfram\Crawler;
+use \wolfram\Models\Crawler;
+use \wolfram\Models\ServiceContainer;
+use \wolfram\Models\Manager;
+
 
 require __DIR__ . '/vendor/autoload.php';
 
-$container = new \wolfram\ServiceContainer();
+$container = new ServiceContainer();
 
 $container['crawler'] = function () {
     return new Crawler();
@@ -17,7 +20,7 @@ $container['crawler'] = function () {
 //};
 //
 $container['manager'] = function() use ($container) {
-    return new \wolfram\Manager($container->get('crawler'));
+    return new Manager($container->get('crawler'));
 };
 
 

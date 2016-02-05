@@ -1,8 +1,10 @@
 <?php
 
-namespace wolfram;
+namespace wolfram\Models;
 
-class ServiceContainer extends \ArrayObject
+use ArrayObject;
+
+class ServiceContainer extends ArrayObject
 {
     /**
      * @param $key

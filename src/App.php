@@ -3,6 +3,7 @@
 namespace wolfram;
 
 use \Exception;
+use wolfram\Models\ServiceContainer;
 
 class App
 {

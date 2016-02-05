@@ -1,40 +1,41 @@
 <?php
 
-namespace wolfram;
+namespace wolfram\Models;
 
 use \DOMDocument;
+use wolfram\Interfaces\CrawlerInterface;
 
-class Crawler
+class Crawler implements CrawlerInterface
 {
     /**
      * @var string Start URI
      */
-    protected $url;
+    private $url;
 
     /**
      * @var integer Search Depth
      */
-    protected $depth;
+    private $depth;
 
     /**
      * @var string Domain
      */
-    protected $host;
+    private $host;
 
     /**
      * @var array Processed page
      */
-    protected $seen = [];
+    private $seen = [];
 
     /**
      * @var array Data about processed pages
      */
-    protected $data = [];
+    private $data = [];
 
     /**
      * @var string The name of tag
      */
-    protected $searchTag;
+    private $searchTag;
 
     /**
      * Set url
@@ -88,6 +89,8 @@ class Crawler
     }
 
     /**
+     * Start Process
+     *
      * @return mixed
      */
     public function run()
@@ -102,7 +105,7 @@ class Crawler
      * @param string $url The URI of the current page
      * @param integer $depth The Depth for current page
      */
-    protected function processLinks(DOMDocument $dom, $url, $depth)
+    private function processLinks(DOMDocument $dom, $url, $depth)
     {
         $anchors = $dom->getElementsByTagName('a');
         foreach ($anchors as $element) {
@@ -131,7 +134,7 @@ class Crawler
      * @param string $url The URI of page
      * @return array
      */
-    protected function getContent($url)
+    private function getContent($url)
     {
         $handle = curl_init($url);
 
@@ -154,7 +157,7 @@ class Crawler
      * @param integer $depth Depth
      * @return bool
      */
-    protected function isValid($url, $depth)
+    private function isValid($url, $depth)
     {
         $url = preg_replace('/^[\s\S]+(?=\#)/', '', $url);
         $url = rtrim($url, '/');

@@ -1,6 +1,8 @@
 <?php
 
-namespace wolfram;
+namespace wolfram\Models;
+
+use wolfram\Interfaces\CrawlerInterface;
 
 class Manager
 {
@@ -14,9 +16,9 @@ class Manager
 
     /**
      * Manager constructor.
-     * @param Crawler $crawler
+     * @param CrawlerInterface $crawler
      */
-    public function __construct(Crawler $crawler)
+    public function __construct(CrawlerInterface $crawler)
     {
         $options = getopt(false, ['url::', 'depth:']);
 
