@@ -16,9 +16,9 @@ $container['crawler'] = function () {
 //    return new HtmlExtractor();
 //};
 //
-//$container['google_finder'] = function() use ($container) {
-//    return new GoogleFinder($container->get('grabber'), $container->get('html_filter'));
-//};
+$container['manager'] = function() use ($container) {
+    return new \wolfram\Manager($container->get('crawler'));
+};
 
 
 $app = new App($container);

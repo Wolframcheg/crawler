@@ -4,6 +4,10 @@ namespace wolfram;
 
 class ServiceContainer extends \ArrayObject
 {
+    /**
+     * @param $key
+     * @return mixed
+     */
     public function get($key)
     {
         if (is_callable($this[$key])) {
