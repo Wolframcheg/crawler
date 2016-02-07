@@ -146,7 +146,9 @@ class Crawler implements CrawlerInterface
         $time = curl_getinfo($handle, CURLINFO_TOTAL_TIME);
         /* Check for 404 (file not found). */
         $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+
         curl_close($handle);
+
         return [$response, $httpCode, $time];
     }
 
@@ -159,14 +161,23 @@ class Crawler implements CrawlerInterface
      */
     private function isValid($url, $depth)
     {
-        $url = preg_replace('/^[\s\S]+(?=\#)/', '', $url);
-        $url = rtrim($url, '/');
+        $url = preg_replace('/^[\s\S]+(?=\#)/', '', $url);//remove anchors from url
+        $url = rtrim($url, '/');//remove trailing slash
+        $info = pathinfo($url);
 
         if (strpos($url, $this->host) === false
             || $depth === 0
             || isset($this->seen[$url])
-            || isset($this->seen[$url])
         ) return false;
+
+        if (isset($info['extension'])) {
+            if (($info['extension'] == 'jpg') ||
+                ($info['extension'] == 'jpeg') ||
+                ($info['extension'] == 'gif') ||
+                ($info['extension'] == 'png')
+            )
+                return false;
+        }
 
         return true;
     }
@@ -185,6 +196,7 @@ class Crawler implements CrawlerInterface
 
         list($content, $httpCode, $time) = $this->getContent($url);
         if ($httpCode != 200) return;
+
 
         $dom = new DOMDocument('1.0');
         @$dom->loadHTML($content);

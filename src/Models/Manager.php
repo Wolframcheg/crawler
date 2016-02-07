@@ -3,6 +3,7 @@
 namespace wolfram\Models;
 
 use wolfram\Interfaces\CrawlerInterface;
+use wolfram\Interfaces\ReporterInterface;
 
 class Manager
 {
@@ -12,22 +13,27 @@ class Manager
     ];
 
     private $crawler;
+    private $reporter;
     private $data;
 
     /**
      * Manager constructor.
      * @param CrawlerInterface $crawler
+     * @param ReporterInterface $reporter
      */
-    public function __construct(CrawlerInterface $crawler)
+    public function __construct(CrawlerInterface $crawler, ReporterInterface $reporter)
     {
         $options = getopt(false, ['url::', 'depth:']);
 
         $this->options = array_merge($this->options, $options);
         $this->crawler = $crawler;
+        $this->reporter = $reporter;
     }
 
     /**
-     * @return mixed
+     * Get Data from Crawler
+     *
+     * @return Manager
      */
     public function getData()
     {
@@ -37,6 +43,34 @@ class Manager
             ->run();
 
         $this->data = $this->crawler->getData();
+        return $this;
+    }
+
+    /**
+     * Sorting Data
+     *
+     * @param string $sortBy
+     * @return Manager
+     */
+    public function sortData($sortBy = 'countImg')
+    {
+        usort($this->data, function ($a, $b) use ($sortBy) {
+            return ($b[$sortBy] - $a[$sortBy]);
+        });
+        return $this;
+    }
+
+    /**
+     *  Generate Report and write it to file
+     *
+     * @return Manager
+     */
+    public function reportData()
+    {
+        $this->reporter->setTitle($this->options['url'])
+            ->setData($this->data)
+            ->run();
+        return $this;
     }
 
 }

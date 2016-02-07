@@ -8,8 +8,6 @@ interface CrawlerInterface
      * Set url
      *
      * @param $url
-     *
-     * @return CrawlerInterface
      */
     public function setUrl($url);
 
@@ -17,8 +15,6 @@ interface CrawlerInterface
      * Set depth
      *
      * @param $depth
-     *
-     * @return CrawlerInterface
      */
     public function setDepth($depth);
 
@@ -26,8 +22,6 @@ interface CrawlerInterface
      * Set searchTag
      *
      * @param $searchTag
-     *
-     * @return CrawlerInterface
      */
     public function setSearchTag($searchTag);
 
@@ -35,7 +29,6 @@ interface CrawlerInterface
      * Start Process
      *
      * @return mixed
-     *
      */
     public function run();
 

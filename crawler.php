@@ -5,6 +5,7 @@ use \wolfram\App;
 use \wolfram\Models\Crawler;
 use \wolfram\Models\ServiceContainer;
 use \wolfram\Models\Manager;
+use \wolfram\Models\Reporter;
 
 
 require __DIR__ . '/vendor/autoload.php';
@@ -15,12 +16,12 @@ $container['crawler'] = function () {
     return new Crawler();
 };
 
-//$container['html_filter'] = function () {
-//    return new HtmlExtractor();
-//};
-//
+$container['reporter'] = function () {
+    return new Reporter();
+};
+
 $container['manager'] = function() use ($container) {
-    return new Manager($container->get('crawler'));
+    return new Manager($container->get('crawler'), $container->get('reporter'));
 };
 
 

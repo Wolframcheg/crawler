@@ -20,20 +20,13 @@ class App
 
     /**
      * Start application
-     *
-     * @return bool
      */
     public function run()
     {
-        try {
-            $manager = $this->container->get('manager');
-            $manager->getData();
-
-            return true;
-        } catch (Exception $e) {
-            $this->_errorMessage = 'ERROR: ' . $e->getMessage();
-        }
-        return false;
+        $this->container->get('manager')
+            ->getData()
+            ->sortData()
+            ->reportData();
     }
 
 }
