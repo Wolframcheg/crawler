@@ -14,6 +14,11 @@
 Результат:
 - файл report_dd.mm.yyyy.html
 
+# Установка
+```
+composer install
+```
+
 # Запуск
 ```
 php crawler.php --url="http://example.ru" --depth="3"
