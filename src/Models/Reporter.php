@@ -7,17 +7,28 @@ use wolfram\Interfaces\ReporterInterface;
 
 class Reporter implements ReporterInterface
 {
-    private $path = '/../../reports/';
+    private $rootDir;
+
+    private $path = '/reports/';
 
     private $extension = '.html';
 
     private $maskName = 'report_{date}';
 
-    private $template = '/../Templates/Report.tpl';
+    private $template = '/src/Templates/Report.tpl';
 
     private $title;
 
     private $data;
+
+    /**
+     * Reporter constructor.
+     * @param $rootDir
+     */
+    public function __construct($rootDir)
+    {
+        $this->rootDir = $rootDir;
+    }
 
 
     /**
@@ -112,7 +123,7 @@ class Reporter implements ReporterInterface
      */
     private function getTemplateRaw()
     {
-        $tpl = file_get_contents(__DIR__ . $this->template);
+        $tpl = file_get_contents($this->rootDir . $this->template);
         return $tpl;
     }
 
@@ -143,7 +154,7 @@ class Reporter implements ReporterInterface
         $filename = str_replace('{date}'
                 , date('d.m.Y')
                 , $this->maskName) . $this->extension;
-        return __DIR__ . $this->path . $filename;
+        return $this->rootDir . $this->path . $filename;
     }
 
 

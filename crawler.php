@@ -17,7 +17,7 @@ $container['crawler'] = function () {
 };
 
 $container['reporter'] = function () {
-    return new Reporter();
+    return new Reporter(__DIR__);
 };
 
 $container['manager'] = function() use ($container) {

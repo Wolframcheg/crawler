@@ -139,6 +139,8 @@ class Crawler implements CrawlerInterface
         $handle = curl_init($url);
 
         curl_setopt($handle, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($handle, CURLOPT_TIMEOUT, 60);
+        curl_setopt($handle, CURLOPT_FOLLOWLOCATION, 1);
 
         /* Get the HTML or whatever is linked in $url. */
         $response = curl_exec($handle);
